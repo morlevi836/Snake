@@ -12,6 +12,11 @@ public class GamePanel extends JPanel implements ActionListener {
     private final JButton resetButton = new JButton();
     private final JButton continueButton = new JButton();
     private final JButton playButton = new JButton();
+<<<<<<< HEAD
+=======
+    private final JButton quitButton = new JButton();
+
+>>>>>>> 743c6b5 (Initial commit)
 
     private final Timer timer = new Timer(Def.DELAY, this);
     private final Random random = new Random();
@@ -43,7 +48,13 @@ public class GamePanel extends JPanel implements ActionListener {
     public void startGame() {
         resetButton.setVisible(false);
         continueButton.setVisible(false);
+<<<<<<< HEAD
         gameRunning = true;
+=======
+        quitButton.setVisible(false);
+        gameRunning = true;
+        pauseGame = false;
+>>>>>>> 743c6b5 (Initial commit)
         timer.start();
     }
 
@@ -111,6 +122,15 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics_1 = getFontMetrics(graphics.getFont());
         graphics.drawString("Game Paused", (Def.WINDOW_WIDTH - metrics_1.stringWidth("Game Paused")) / 2, Def.WINDOW_HEIGHT / 2 - 60);
 
+<<<<<<< HEAD
+=======
+        //space text
+        graphics.setColor(Color.BLACK);
+        graphics.setFont(new Font("Serif", Font.BOLD, 25));
+        FontMetrics metrics_2 = getFontMetrics(graphics.getFont());
+        graphics.drawString("Press Space To continue", (Def.WINDOW_WIDTH - metrics_2.stringWidth("Press Space To continue")) / 2 - 5, Def.WINDOW_HEIGHT / 2 + 50);
+
+>>>>>>> 743c6b5 (Initial commit)
         setFocusable(true);
         continueButton.setVisible(true);
         continueButton.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
@@ -122,6 +142,7 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.stop();
         this.add(continueButton);
         continueButton.addActionListener(e -> {
+<<<<<<< HEAD
             continueButton.setVisible(false);
             gameRunning = true;
             pauseGame = false;
@@ -138,6 +159,30 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.setFont(new Font("Serif", Font.BOLD, 30));
         FontMetrics metrics_2 = getFontMetrics(graphics.getFont());
         graphics.drawString("Press Space To Continue", (Def.WINDOW_WIDTH - metrics_2.stringWidth("Press Space To Continue")) / 2 - 6, Def.WINDOW_HEIGHT - 95 );
+=======
+            for (int i = snakeBody; i > 0; i--) {
+                x[i] = x[i - 1];
+                y[i] = y[i - 1];
+            }
+            startGame();
+        });
+
+        setFocusable(true);
+        quitButton.setVisible(true);
+        quitButton.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        quitButton.setForeground(Color.BLACK);
+        quitButton.setText("Quit");
+        quitButton.setSize(150, 50);
+        quitButton.setLocation(Def.WINDOW_WIDTH / 2 - 80, Def.WINDOW_HEIGHT / 2 + 155);
+        quitButton.setBackground(Color.GREEN);
+        this.add(quitButton);
+        quitButton.addActionListener(e -> {
+            continueButton.setVisible(false);
+            quitButton.setVisible(false);
+            gameRunning = false;
+            pauseGame = false;
+        });
+>>>>>>> 743c6b5 (Initial commit)
     }
 
     public void gameOver(Graphics graphics) {
@@ -166,6 +211,7 @@ public class GamePanel extends JPanel implements ActionListener {
         resetButton.setLocation(Def.WINDOW_WIDTH / 2 - 80, Def.WINDOW_HEIGHT / 2 + 110);
         resetButton.setBackground(Color.GREEN);
         timer.stop();
+<<<<<<< HEAD
 
         this.add(resetButton);
         resetButton.addActionListener(e -> {
@@ -186,6 +232,24 @@ public class GamePanel extends JPanel implements ActionListener {
             y[i] = y[i - 1];
         }
 
+=======
+        this.add(resetButton);
+        resetButton.addActionListener(e -> {
+            score = 0;
+            snakeBody = 5;
+            snakeDirection = 'R';
+            Def.DELAY = 100;
+            timer.setDelay(Def.DELAY);
+            for (int i = snakeBody; i > 0; i--) {
+                x[i] = x[i - 1];
+                y[i] = y[i - 1];
+            }
+            setBackground(new Color(random.nextInt()));
+            newPoint();
+            startGame();
+
+        });
+>>>>>>> 743c6b5 (Initial commit)
         //Space text
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Serif", Font.BOLD, 20));
@@ -312,8 +376,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
             //for the pause panel
             if (keyCode == KeyEvent.VK_SPACE && pauseGame) {
+<<<<<<< HEAD
                 gameRunning = true;
                 pauseGame = false;
+=======
+>>>>>>> 743c6b5 (Initial commit)
                 for (int i = snakeBody; i > 0; i--) {
                     x[i] = x[i - 1];
                     y[i] = y[i - 1];
@@ -323,20 +390,34 @@ public class GamePanel extends JPanel implements ActionListener {
 
             //for the game over panel
             if (keyCode == KeyEvent.VK_SPACE && !gameRunning) {
+<<<<<<< HEAD
                 resetButton.setVisible(false);
                 score = 0;
                 snakeBody = 5;
                 snakeDirection = 'R';
                 gameRunning = true;
+=======
+                score = 0;
+                snakeBody = 5;
+                snakeDirection = 'R';
+                Def.DELAY = 100 ;
+                timer.setDelay(Def.DELAY);
+>>>>>>> 743c6b5 (Initial commit)
                 for (int i = snakeBody; i > 0; i--) {
                     x[i] = x[i - 1];
                     y[i] = y[i - 1];
                 }
+<<<<<<< HEAD
                 Def.DELAY = 100 ;
                 timer.setDelay(Def.DELAY);
                 setBackground(new Color(random.nextInt()));
                 newPoint();
                 startGame(); 
+=======
+                setBackground(new Color(random.nextInt()));
+                newPoint();
+                startGame();
+>>>>>>> 743c6b5 (Initial commit)
             }
 
             //for the snake movement
