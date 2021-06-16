@@ -107,6 +107,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void Pause(Graphics graphics) {
+        this.setBackground(new Color(37, 158, 1));
         //Pause text
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("Algerian", Font.BOLD, 90));
