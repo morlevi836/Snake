@@ -31,7 +31,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
     GamePanel() {
         this.setPreferredSize(new Dimension(Def.WINDOW_WIDTH, Def.WINDOW_HEIGHT));
-        this.setBackground(new Color(37, 158, 1));
         this.addKeyListener(new movement());
         this.setFocusable(true);
         try {
@@ -72,6 +71,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void Start(Graphics graphics) {
+        this.setBackground(new Color(37, 158, 1));
         //SNAKE text
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("Algerian", Font.BOLD, 120));
