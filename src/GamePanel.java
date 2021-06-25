@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import static java.awt.event.KeyEvent.*;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -21,8 +22,8 @@ public class GamePanel extends JPanel implements ActionListener {
     private int snakeBody = 5;
     private int highScore;
     private int score;
-    private int point_X;
-    private int point_Y;
+    private int pointX;
+    private int pointY;
     private char snakeDirection = 'R';
     private boolean gameRunning = false;
     private boolean spaceNeeded = false;
@@ -31,7 +32,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     GamePanel() {
         this.setPreferredSize(new Dimension(Def.WINDOW_WIDTH, Def.WINDOW_HEIGHT));
-        this.addKeyListener(new movement());
+        this.addKeyListener(new Movement());
         this.setFocusable(true);
         try {
             backgroundImage = ImageIO.read(new File("images/ImageBackground.jpeg"));
@@ -66,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener {
             gameOver(graphics);
         } else {
             graphics.drawImage(backgroundImage, 0, 0, Def.WINDOW_WIDTH, Def.WINDOW_HEIGHT, this);
-            draw(graphics);
+            Draw(graphics);
         }
     }
 
@@ -192,12 +193,12 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void draw(Graphics graphics) {
+    public void Draw(Graphics graphics) {
         //points setting
         graphics.setColor(Color.RED);
-        graphics.fillOval(point_X, point_Y, Def.DIMENSION, Def.DIMENSION);
+        graphics.fillOval(pointX, pointY, Def.DIMENSION, Def.DIMENSION);
         graphics.setColor(Color.BLACK);
-        graphics.drawRoundRect(point_X, point_Y, Def.DIMENSION, Def.DIMENSION, 20, 20);
+        graphics.drawRoundRect(pointX, pointY, Def.DIMENSION, Def.DIMENSION, 20, 20);
         //snake setting
         for (int i = 0; i < snakeBody; i++) {
             if (i == 0) {
@@ -222,8 +223,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void newPoint() {
-        point_X = random.nextInt((Def.WINDOW_WIDTH / Def.DIMENSION)) * Def.DIMENSION;
-        point_Y = random.nextInt((Def.WINDOW_HEIGHT / Def.DIMENSION)) * Def.DIMENSION;
+        pointX = random.nextInt((Def.WINDOW_WIDTH / Def.DIMENSION)) * Def.DIMENSION;
+        pointY = random.nextInt((Def.WINDOW_HEIGHT / Def.DIMENSION)) * Def.DIMENSION;
     }
 
     public void snakeMovement() {
@@ -240,10 +241,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkPoints() {
-        if ((x[0] == point_X) && (y[0] == point_Y)) {
+        if ((x[0] == pointX) && (y[0] == pointY)) {
             snakeBody++;
             score++;
-            if (Def.DELAY > 37) {
+            if (Def.DELAY > 35) {
                 if (score % 5 == 0) {
                     Def.DELAY = Def.DELAY - 3;
                     timer.setDelay(Def.DELAY);
@@ -261,6 +262,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 break;
             }
         }
+
+        if (!gameRunning) timer.stop();
+
         //checks if head touches left border
         if (x[0] < 0) {
             x[0] = Def.WINDOW_WIDTH;
@@ -277,9 +281,6 @@ public class GamePanel extends JPanel implements ActionListener {
         if (y[0] > Def.WINDOW_HEIGHT) {
             y[0] = 0;
         }
-        if (!gameRunning) {
-            timer.stop();
-        }
     }
 
     @Override
@@ -292,26 +293,26 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
-    public class movement extends KeyAdapter {
+    public class Movement extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent event) {
             int keyCode = event.getKeyCode();
             //for the start panel
-            if (keyCode == KeyEvent.VK_SPACE && spaceNeeded) {
+            if (keyCode == VK_SPACE && spaceNeeded) {
                 playButton.setVisible(false);
                 status = "Running";
                 gameRunning = true;
             }
             //for the pause panel
-            if (keyCode == KeyEvent.VK_ESCAPE && gameRunning) {
+            if (keyCode == VK_ESCAPE && gameRunning) {
                 pauseGame = true;
             }
             //for the pause panel
-            if (keyCode == KeyEvent.VK_SPACE && pauseGame) {
+            if (keyCode == VK_SPACE && pauseGame) {
                 startGame();
             }
             //for the game over panel
-            if (keyCode == KeyEvent.VK_SPACE && !gameRunning) {
+            if (keyCode == VK_SPACE && !gameRunning) {
                 score = 0;
                 snakeBody = 5;
                 snakeDirection = 'R';
@@ -320,41 +321,29 @@ public class GamePanel extends JPanel implements ActionListener {
                 newPoint();
                 startGame();
             }
-            //for the snake movement
+            //for the snake Movement
             if (status.equals("Running")) {
                 switch (event.getKeyCode()) {
-                    case KeyEvent.VK_D:
-                        if (snakeDirection != 'L') {
-                            snakeDirection = 'R';
-                        }
-                    case KeyEvent.VK_RIGHT:
+                    case VK_D:
+                    case VK_RIGHT:
                         if (snakeDirection != 'L') {
                             snakeDirection = 'R';
                         }
                         break;
-                    case KeyEvent.VK_A:
-                        if (snakeDirection != 'R') {
-                            snakeDirection = 'L';
-                        }
-                    case KeyEvent.VK_LEFT:
+                    case VK_A:
+                    case VK_LEFT:
                         if (snakeDirection != 'R') {
                             snakeDirection = 'L';
                         }
                         break;
-                    case KeyEvent.VK_W:
-                        if (snakeDirection != 'D') {
-                            snakeDirection = 'U';
-                        }
-                    case KeyEvent.VK_UP:
+                    case VK_W:
+                    case VK_UP:
                         if (snakeDirection != 'D') {
                             snakeDirection = 'U';
                         }
                         break;
-                    case KeyEvent.VK_S:
-                        if (snakeDirection != 'U') {
-                            snakeDirection = 'D';
-                        }
-                    case KeyEvent.VK_DOWN:
+                    case VK_S:
+                    case VK_DOWN:
                         if (snakeDirection != 'U') {
                             snakeDirection = 'D';
                             break;
