@@ -298,21 +298,18 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent event) {
             int keyCode = event.getKeyCode();
             //for the start panel
-            if (keyCode == VK_SPACE && spaceNeeded) {
+            if ((keyCode == VK_SPACE) && spaceNeeded) {
                 playButton.setVisible(false);
                 status = "Running";
                 gameRunning = true;
             }
+
             //for the pause panel
-            if (keyCode == VK_ESCAPE && gameRunning) {
-                pauseGame = true;
-            }
-            //for the pause panel
-            if (keyCode == VK_SPACE && pauseGame) {
-                startGame();
-            }
+            if ((keyCode == VK_ESCAPE) && gameRunning) pauseGame = true;
+            if ((keyCode == VK_SPACE) && pauseGame) startGame();
+
             //for the game over panel
-            if (keyCode == VK_SPACE && !gameRunning) {
+            if ((keyCode == VK_SPACE) && !gameRunning) {
                 score = 0;
                 snakeBody = 5;
                 snakeDirection = 'R';
@@ -321,34 +318,33 @@ public class GamePanel extends JPanel implements ActionListener {
                 newPoint();
                 startGame();
             }
+
             //for the snake Movement
-            if (status.equals("Running")) {
-                switch (event.getKeyCode()) {
-                    case VK_D:
-                    case VK_RIGHT:
-                        if (snakeDirection != 'L') {
-                            snakeDirection = 'R';
-                        }
+            if (status.equals("Running")) switch (event.getKeyCode()) {
+                case VK_D:
+                case VK_RIGHT:
+                    if (snakeDirection != 'L') {
+                        snakeDirection = 'R';
+                    }
+                    break;
+                case VK_A:
+                case VK_LEFT:
+                    if (snakeDirection != 'R') {
+                        snakeDirection = 'L';
+                    }
+                    break;
+                case VK_W:
+                case VK_UP:
+                    if (snakeDirection != 'D') {
+                        snakeDirection = 'U';
+                    }
+                    break;
+                case VK_S:
+                case VK_DOWN:
+                    if (snakeDirection != 'U') {
+                        snakeDirection = 'D';
                         break;
-                    case VK_A:
-                    case VK_LEFT:
-                        if (snakeDirection != 'R') {
-                            snakeDirection = 'L';
-                        }
-                        break;
-                    case VK_W:
-                    case VK_UP:
-                        if (snakeDirection != 'D') {
-                            snakeDirection = 'U';
-                        }
-                        break;
-                    case VK_S:
-                    case VK_DOWN:
-                        if (snakeDirection != 'U') {
-                            snakeDirection = 'D';
-                            break;
-                        }
-                }
+                    }
             }
         }
     }
