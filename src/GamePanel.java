@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private boolean gameRunning = false;
     private boolean spaceNeeded = false;
     private boolean pauseGame = false;
-    private String status = "Start";
+    private String status = "start";
 
     GamePanel() {
         this.setPreferredSize(new Dimension(Def.WINDOW_WIDTH, Def.WINDOW_HEIGHT));
@@ -53,12 +53,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        if (status.equals("Start")) {
+        if (status.equals("start")) {
             gameRunning = false;
             spaceNeeded = true;
-            Start(graphics);
+            start(graphics);
         } else if (pauseGame) {
-            Pause(graphics);
+            pause(graphics);
         } else if (!gameRunning && status.equals("Running")) {
             if (highScore < score)
                 highScore = score;
@@ -67,11 +67,11 @@ public class GamePanel extends JPanel implements ActionListener {
             gameOver(graphics);
         } else {
             graphics.drawImage(backgroundImage, 0, 0, Def.WINDOW_WIDTH, Def.WINDOW_HEIGHT, this);
-            Draw(graphics);
+            draw(graphics);
         }
     }
 
-    private void Start(Graphics graphics) {
+    private void start(Graphics graphics) {
         this.setBackground(new Color(37, 158, 1));
         //SNAKE text
         graphics.setColor(Color.BLACK);
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("Dubai", Font.BOLD, 60));
         FontMetrics metrics_2 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Press Space To Start", (Def.WINDOW_WIDTH - metrics_2.stringWidth("Press Space To Start")) / 2, Def.WINDOW_HEIGHT / 2 + 15);
+        graphics.drawString("Press Space To start", (Def.WINDOW_WIDTH - metrics_2.stringWidth("Press Space To start")) / 2, Def.WINDOW_HEIGHT / 2 + 15);
         //Creators text
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("Serif", Font.BOLD, 20));
@@ -107,9 +107,9 @@ public class GamePanel extends JPanel implements ActionListener {
         newPoint();
     }
 
-    private void Pause(Graphics graphics) {
+    private void pause(Graphics graphics) {
         this.setBackground(new Color(37, 158, 1));
-        //Pause text
+        //pause text
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("Algerian", Font.BOLD, 90));
         FontMetrics metrics_1 = getFontMetrics(graphics.getFont());
@@ -193,7 +193,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void Draw(Graphics graphics) {
+    public void draw(Graphics graphics) {
         //points setting
         graphics.setColor(Color.RED);
         graphics.fillOval(pointX, pointY, Def.DIMENSION, Def.DIMENSION);
@@ -220,6 +220,10 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.setFont(new Font("Comic Sans MS", Font.ITALIC, 20));
         FontMetrics metrics_2 = getFontMetrics(graphics.getFont());
         graphics.drawString("High Score: " + highScore, (Def.WINDOW_WIDTH - metrics_2.stringWidth("High Score: " + highScore)) - 22, Def.WINDOW_HEIGHT - 52);
+        //Esc text
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("Serif", Font.BOLD, 15));
+        graphics.drawString("Esc - pause", 0, 15);
     }
 
     public void newPoint() {
